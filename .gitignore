@@ -8,10 +8,21 @@ __pycache__/
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
+
 # Model and data files
+models/
 *.pkl
 *.joblib
 *.h5
+
+# Notebook outputs
+notebooks/*_checkpoint.ipynb
+notebooks/*.ipynb_checkpoints
+
+# Coverage and cache
+.coverage
+.pytest_cache/
+__pycache__/
 
 # Dataset files
 dataset/*.csv

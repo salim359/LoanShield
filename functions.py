@@ -1,6 +1,17 @@
-def calculate_credit_worthiness(
-    credit_score, income_usd, dtir1, open_credit, loan_amount_usd, age,
-    business_or_commercial, property_value_usd, LTV, term, rate_of_interest,
+import pandas as pd
+
+def preprocess_input(df, X_columns):
+    df = df.drop(columns=['Gender','ID'], errors='ignore')
+    df = df.fillna(df.median(numeric_only=True))
+    df = pd.get_dummies(df, drop_first=True)
+    df = df.reindex(columns=X_columns, fill_value=0)
+    return df
+    
+
+        
+def calculate_credit_worthiness_business(
+    credit_score, income_usd, dtir1, open_credit, loan_amount_usd,
+    business_or_commercial, LTV, term, rate_of_interest,
     neg_ammortization, interest_only, lump_sum_payment
 ):
     score = 0
@@ -29,16 +40,8 @@ def calculate_credit_worthiness(
     elif open_credit > 7:
         score -= 1
 
-    # Loan amount vs property value (in USD)
-    if loan_amount_usd < property_value_usd:
-        score += 1
-
-    # Age
-    if age >= 30:
-        score += 1
-
     # Business or commercial loan
-    if business_or_commercial == "No":
+    if business_or_commercial == "YES":
         score += 1
 
     # LTV
